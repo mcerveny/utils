@@ -407,7 +407,6 @@ void *frame_thread(void *param)
 					assert(ret>0);
 					ret = drm_object_add_property(drm.request, drm.plane_id, drm.plane_props, "EOTF", hdr_source.eotf);
 					assert(ret>0);
-printf("x %d\n", __LINE__);
 				} else {
 					// SDR panel
 					ret = drm_object_add_property(drm.request, drm.plane_id, drm.plane_props, "EOTF", hdr_source.eotf? TRADITIONAL_GAMMA_HDR : TRADITIONAL_GAMMA_SDR);
