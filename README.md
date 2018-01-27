@@ -20,10 +20,12 @@
 	* gcc -o mpi_dec -I/usr/include/rockchip -lrockchip_mpp -I/usr/include/libdrm -ldrm -lpthread -g -Wno-multichar mpi_dec.c
 * testing
 	* need raw video sources
+	* HDR/HLG work with temporary patch until resolve https://github.com/rockchip-linux/mpp/issues/38
 ```
 # ffmpeg -i "LG Chess 4K Demo.mp4" -c:v copy -an -bsf:v hevc_mp4toannexb 2k60hdr.hevc
 # ffmpeg -i bbb-3840x2160-cfg02.mkv -c:v copy -an -bsf:v hevc_mp4toannexb 2k60.hevc
 # ffmpeg -i bbb_sunflower_2160p_60fps_normal.mp4 -c:v -an -bsf:v h264_mp4toannexb 4k60.h264
+# ffmpeg -i "LG Cymatic Jazz 4K Demo.ts" -c:v copy -an -bsf:v hevc_mp4toannexb 2k60hdr_hlg.hevc
 ```
 *	* sometimes speedup CPU and/or DDR is needed
 ```

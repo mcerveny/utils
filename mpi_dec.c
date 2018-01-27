@@ -140,7 +140,7 @@ int drm_object_add_property(drmModeAtomicReq *request, uint32_t id, drmModePrope
 // frame_thread
 //
 // - allocate DRM buffers and DRM FB based on frame size
-// - pickup frame in blocking mode and output to screen overlay
+// - pick frame in blocking mode and output to screen overlay
 
 void *frame_thread(void *param)
 {
@@ -182,7 +182,7 @@ void *frame_thread(void *param)
 				// position overlay, scale to pixel ratio 1:1
 				float crt_ratio = (float)drm.crtc_width/drm.crtc_height;
 				float frame_ratio = (float)drm.frm_width/drm.frm_height;
-				
+
 				if (crt_ratio>frame_ratio) {
 					drm.fb_width = frame_ratio/crt_ratio*drm.crtc_width;
 					drm.fb_height = drm.crtc_height;
@@ -313,6 +313,8 @@ void *frame_thread(void *param)
 					case MPP_FRAME_TRC_SMPTEST2084:
 						hdr_source.eotf = SMPTE_ST2084;
 						break;
+					case MPP_FRAME_TRC_BT2020_10:
+						// this is patch for HLG until resolve https://github.com/rockchip-linux/mpp/issues/38
 					case MPP_FRAME_TRC_ARIB_STD_B67:	
 						hdr_source.eotf = HLG;
 						break;
@@ -320,7 +322,6 @@ void *frame_thread(void *param)
 					case MPP_FRAME_TRC_SMPTE170M:
 					case MPP_FRAME_TRC_SMPTE240M:
 					case MPP_FRAME_TRC_BT1361_ECG:
-					case MPP_FRAME_TRC_BT2020_10:
 					case MPP_FRAME_TRC_BT2020_12:
 						hdr_source.eotf = TRADITIONAL_GAMMA_SDR;
 						break;
@@ -341,7 +342,7 @@ void *frame_thread(void *param)
 				switch (colorSpc) {
 					case MPP_FRAME_SPC_UNSPECIFIED:
 						break;
-					case MPP_FRAME_SPC_RGB:		// patch
+					case MPP_FRAME_SPC_RGB:		// this patch for mpp_frame_get_colorspace() until resolve https://github.com/rockchip-linux/mpp/issues/38
 						switch (colorPri) {
 							case MPP_FRAME_PRI_BT709:
 								color_space = V4L2_COLORSPACE_REC709; break;
@@ -837,7 +838,6 @@ int main(int argc, char **argv)
 	drmModeFreePlane(plane);
 	drmModeFreePlaneResources(plane_resources);
 	drmModeFreeEncoder(encoder);
-	drmModePropertyBlobPtr panel_metadata_prop;
 	drmModeFreeConnector(connector);
 	drmModeFreeCrtc(crtc);
 	drmModeFreeResources(resources);
