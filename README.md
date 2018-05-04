@@ -14,7 +14,7 @@
 * prerequisites
 	* tested on RK3328/ROCK64 only
 	* minimal os without X11/Wayland GUI (renders directly to framebuffer)
-	* Rockchip linux-4.4 with some patches like https://github.com/mcerveny/rockchip-linux/tree/release-4.4-hdr
+	* Rockchip linux-4.4 with some minimal patches like https://github.com/mcerveny/rockchip-linux/tree/release-4.4-hdr-201805
 	* Rockchip MPP and LIBDRM like https://launchpad.net/~ayufan/+archive/ubuntu/rock64-ppa
 * compiling
 	* gcc -o mpi_dec -I/usr/include/rockchip -lrockchip_mpp -I/usr/include/libdrm -ldrm -lpthread -g -Wno-multichar mpi_dec.c
